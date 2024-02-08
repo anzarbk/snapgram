@@ -17,4 +17,7 @@ export enum QUERY_KEYS {
   
     //  SEARCH KEYS
     SEARCH_POSTS = "getSearchPosts",
-  }
+}
+// export interface QUERY__KEYS {
+//   GET_INFINITE_POSTS = "getInfinitePosts",
+//   }
