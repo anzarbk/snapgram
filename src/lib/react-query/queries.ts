@@ -24,7 +24,7 @@ import {
     getUserById,
     updateUser,
     getRecentPosts,
-    getInfinitePosts,
+    // getInfinitePosts,
     searchPosts,
     savePost,
     deleteSavedPost,
@@ -65,11 +65,12 @@ import { INewPost, INewUser, IUpdatePost, IUpdateUser } from "../../types";
   export const useGetPosts = () => {
     return useInfiniteQuery({
       queryKey: [QUERY_KEYS.GET_INFINITE_POSTS],
-      queryFn: async ({ pageParam }: { pageParam: number }) => {
+      queryFn: async () => {
         // Your logic to fetch data for a specific page
         // Example: return fetchData(pageParam);
-      },
-      getNextPageParam: (lastPage, allPages) => {
+
+      } ,
+      getNextPageParam: (lastPage:any) => {
         // If there's no data, there are no more pages.
         if (lastPage && lastPage.documents?.length === 0) {
           return undefined;

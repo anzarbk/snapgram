@@ -48,7 +48,7 @@ import { Models } from "appwrite";
   
     const shouldShowSearchResults = searchValue !== "";
     const shouldShowPosts = !shouldShowSearchResults && 
-      posts.pages.every((item) => item?.documents.length === 0);
+      posts.pages.every((item:any) => item?.documents?.length === 0);
   
     return (
       <div className="explore-container">
@@ -97,7 +97,7 @@ import { Models } from "appwrite";
           ) : shouldShowPosts ? (
             <p className="text-light-4 mt-10 text-center w-full">End of posts</p>
           ) : (
-            posts?.pages.map((item, index) => (
+            posts?.pages.map((item:any, index) => (
               <GridPostList key={`page-${index}`} posts={item?.documents as Models.Document[]} />
             ))
           )}
