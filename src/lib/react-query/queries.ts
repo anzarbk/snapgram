@@ -1,7 +1,7 @@
 import {
     useQuery,
   useMutation,
-  // useInfiniteQuery,
+  useInfiniteQuery,
     useQueryClient,
    
 } from "@tanstack/react-query";
@@ -24,7 +24,7 @@ import {
     getUserById,
     updateUser,
     getRecentPosts,
-    // getInfinitePosts,
+    getInfinitePosts,
     searchPosts,
     savePost,
     deleteSavedPost,
@@ -60,25 +60,28 @@ import { INewPost, INewUser, IUpdatePost, IUpdateUser } from "../../types";
   };
   
   // ============================================================ 
-  // POST QUERIES
+  // POST QUERIESgetNextPageParam: (lastPage, allPages) => lastPage.nextCursor,
   // ============================================================
+  export const useGetPosts = () => {
+    return useInfiniteQuery({
+      queryKey: [QUERY_KEYS.GET_INFINITE_POSTS],
+      queryFn: async ({ pageParam }: { pageParam: number }) => {
+        // Your logic to fetch data for a specific page
+        // Example: return fetchData(pageParam);
+      },
+      getNextPageParam: (lastPage, allPages) => {
+        // If there's no data, there are no more pages.
+        if (lastPage && lastPage.documents?.length === 0) {
+          return undefined;
+        }
   
-//   export const useGetPosts = () => {
-//     return useInfiniteQuery({
-//       queryKey: [QUERY_KEYS.GET_INFINITE_POSTS],
-//       queryFn: getInfinitePosts,
-//       getNextPageParam: (lastPage) => {
-//         // If there's no data, there are no more pages.
-//         if (lastPage && lastPage?.documents?.length === 0) {
-//           return null;
-//         }
-  
-//         // Use the $id of the last document as the cursor.
-//         const lastId = lastPage?.documents[lastPage?.documents.length - 1].$id;
-//         return lastId;
-//       },
-//     });
-// };
+        // Use the $id of the last document as the cursor.
+        const lastId = lastPage?.documents[lastPage.documents.length - 1].$id as unknown as number;
+        return lastId;
+      },
+      initialPageParam: undefined,
+    });
+  };
   
 // export const useGetPosts = () => {
 //   return useInfiniteQuery< Error, any, any, QUERY_KEYSS[]>(
